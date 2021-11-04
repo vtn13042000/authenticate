@@ -1,0 +1,4 @@
+node_modules/
+authConfig.js
+dbConfig.js
+.env
