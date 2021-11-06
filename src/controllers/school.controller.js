@@ -19,7 +19,10 @@ export default {
         .status(httpStatus.UNAUTHORIZED)
         .json({ msg: "do not have authority" });
     }
+
+    console.log("------------ Execution --------------");
     console.log(school.toJSON());
+    console.log("------------ Execution --------------");
 
     const alreadyExist = [];
 
@@ -130,7 +133,9 @@ export default {
         .status(httpStatus.UNAUTHORIZED)
         .json({ msg: "do not have authority" });
     }
+    console.log("------------ Execution --------------");
     console.log(school.toJSON());
+    console.log("------------ Execution --------------");
 
     const alreadyExist = [];
 
@@ -215,7 +220,9 @@ export default {
         .status(httpStatus.UNAUTHORIZED)
         .json({ msg: "do not have authority" });
     }
+    console.log("------------ Execution --------------");
     console.log(school.toJSON());
+    console.log("------------ Execution --------------");
 
     const alreadyExist = [];
 
@@ -295,7 +302,9 @@ export default {
         .status(httpStatus.UNAUTHORIZED)
         .json({ msg: "do not have authority" });
     }
+    console.log("------------ Execution --------------");
     console.log(school.toJSON());
+    console.log("------------ Execution --------------");
 
     const alreadyExist = [];
 
@@ -399,7 +408,9 @@ export default {
         .status(httpStatus.UNAUTHORIZED)
         .json({ msg: "do not have authority" });
     }
+    console.log("------------ Execution --------------");
     console.log(school.toJSON());
+    console.log("------------ Execution --------------");
 
     const invalidIdSchool = [];
     const invalidTeacherIdSchool = [];
@@ -429,7 +440,9 @@ export default {
             schoolId: school.id,
           },
         });
-        console.log(targetClass);
+        console.log("------------ Execution --------------");
+        console.log(targetClass.toJSON());
+        console.log("------------ Execution --------------");
 
         if (!targetClass) {
           console.log(
@@ -459,7 +472,6 @@ export default {
         }
 
         // await targetClass.addTeacher(teacherExist);
-        console.log(`Miss`);
         await teacherExist.addClass(targetClass);
       }
       if (missingInfo.length === 0 && invalidIdSchool.length === 0) {
@@ -488,7 +500,9 @@ export default {
         .status(httpStatus.UNAUTHORIZED)
         .json({ msg: "do not have authority" });
     }
+    console.log("------------ Execution --------------");
     console.log(school.toJSON());
+    console.log("------------ Execution --------------");
 
     const invalidIdSchool = [];
     const invalidStudentIdSchool = [];

@@ -14,9 +14,9 @@ export default (req, res, next) =>
           .status(httpStatus.UNAUTHORIZED)
           .json({ message: "Invalid accessToken" });
       }
-      console.log("------------------");
+      console.log("---------------------");
       console.log(user);
-      console.log("------------------");
+      console.log("---------------------");
 
       req.user = user;
       return next();

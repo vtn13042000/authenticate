@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import { default as route } from "./routes/index.js";
@@ -9,56 +12,33 @@ import passport from "passport";
 // SEQUELIZE
 import { default as db } from "./models/index.js";
 // sync to database if not exists
-// await db.sequelize.sync({ force: true });
+await db.sequelize.sync({ alter: true });
 
 // EXPRESS
 const app = express();
 app.use(cors());
 app.get("/", (req, res) => {
-  return res.status(httpStatus.OK).json({ message: "App is working" });
+  return res.status(200).json({ message: "App is working" });
 });
 
 // define http bearer strategy
 
-const getInfoStrategy = {
+const getUserStrategy = {
   admin: async (id) => {
     const user = await db.admin.findOne({ where: { id } });
-    const info = {
-      id: user.id,
-      schoolId: "",
-      role: user.role,
-    };
-    console.log(info);
-    return info;
+    return user.toJSON();
   },
   school: async (id) => {
     const user = await db.school.findOne({ where: { id } });
-    const info = {
-      id: user.id,
-      schoolId: "",
-      role: user.role,
-    };
-    return info;
+    return user.toJSON();
   },
   teacher: async (id) => {
     const user = await db.teacher.findOne({ where: { id } });
-    const info = {
-      id: user.id,
-      schoolId: user.schoolId,
-      role: user.role,
-    };
-    return info;
+    return user.toJSON();
   },
   student: async (id) => {
     const user = await db.student.findOne({ where: { id } });
-
-    const info = {
-      id: user.id,
-      schoolId: user.schoolId,
-      role: user.role,
-    };
-
-    return info;
+    return user.toJSON();
   },
 };
 
@@ -71,7 +51,12 @@ const verify = async (token, done) => {
       return done(new Error("Invalid Token"));
     }
     // Get user info by role
-    const userInfo = await getInfoStrategy[decodedToken.role](decodedToken.sub);
+    const user = await getUserStrategy[decodedToken.role](decodedToken.sub);
+    const userInfo = {
+      id: user.id,
+      role: user.role,
+      schoolId: user.schoolId || "",
+    };
     return done(null, userInfo);
   } catch (err) {
     return done(err);
@@ -91,3 +76,7 @@ app.use(express.urlencoded({ extended: true }));
 route(app);
 
 export default app;
+// const port = process.env.PORT;
+// app.listen(port, () => {
+//   console.log(`Server is listening on http://localhost:${port}`);
+// });

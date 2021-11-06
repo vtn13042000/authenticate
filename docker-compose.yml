@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:5.7
+    hostname: mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=logbook
+      - MYSQL_PASSWORD=logbook
+      - MYSQL_DATABASE=logbook
+    ports:
+      - 3307:3306
+    volumes:
+      - db:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  app:
+    depends_on:
+      - mysql
+    build: .
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    environment:
+      - DB_HOST=mysql
+      - DB_NAME=logbook
+      - DB_USERNAME=logbook
+      - DB_PASSWORD=logbook
+      - DB_DIALECT=mysql
+      - DB_PORT=3306
+      - PORT=8000
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:

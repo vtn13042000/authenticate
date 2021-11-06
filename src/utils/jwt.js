@@ -15,11 +15,11 @@ const getUserSecret = async (token) => {
       return user.securitySecret;
     }
     case "teacher": {
-      const user = await db.teacher.findByPK(decoded.sub);
+      const user = await db.teacher.findOne({ where: { id: decoded.sub } });
       return user.securitySecret;
     }
     case "student": {
-      const user = await db.student.findByPK(decoded.sub);
+      const user = await db.student.findOne({ where: { id: decoded.sub } });
       return user.securitySecret;
     }
     default:
@@ -45,8 +45,6 @@ const verify = (token, verifyOption, userSecret) => {
       if (err) {
         resolve();
       }
-      // console.log(decoded);
-
       resolve(decoded);
     })
   );
